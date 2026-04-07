@@ -25,7 +25,7 @@ chatForm.addEventListener("submit", async (e) => {
   userInput.value = "";
 
   try {
-    const response = await fetch("https://shrill-king-8935.marzoujt.workers.dev/", {
+    const workerUrl = "https://shrill-king-8935.marzoujt.workers.dev/"; {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
