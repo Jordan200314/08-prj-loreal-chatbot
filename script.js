@@ -23,7 +23,7 @@ function addMessage(sender, text) {
 addMessage("ai", "👋 Hi! I'm your L’Oréal advisor. Ask me about skincare, haircare, or beauty routines!");
 
 // Send message
-chatForm.addEventListener("submit", async (e) => {
+chatForm.addEventListener("submit", async function(e) {
   e.preventDefault();
 
   const message = userInput.value.trim();
@@ -39,17 +39,17 @@ chatForm.addEventListener("submit", async (e) => {
     const response = await fetch(workerUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages }) // ✅ must send 'messages' array
+      body: JSON.stringify({ messages: messages })
     });
 
     const data = await response.json();
 
     let reply = "";
 
-    if (data.choices && data.choices[0]?.message?.content) {
+    if (data.choices && data.choices.length > 0 && data.choices[0].message && data.choices[0].message.content) {
       reply = data.choices[0].message.content;
     } else if (data.error) {
-      reply = `⚠️ Error from API: ${data.error}`;
+      reply = "⚠️ Error from API: " + data.error;
     } else {
       reply = "⚠️ Unexpected response from assistant.";
     }
@@ -61,5 +61,4 @@ chatForm.addEventListener("submit", async (e) => {
     addMessage("ai", "⚠️ Error connecting to assistant.");
     console.error(error);
   }
-
 });
