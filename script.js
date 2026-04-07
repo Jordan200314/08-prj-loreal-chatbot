@@ -1,18 +1,43 @@
-/* DOM elements */
 const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
-// Set initial message
-chatWindow.textContent = "👋 Hello! How can I help you today?";
+// Add message to chat
+function addMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.classList.add("msg", sender);
+  msg.textContent = text;
+  chatWindow.appendChild(msg);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
 
-/* Handle form submit */
-chatForm.addEventListener("submit", (e) => {
+// Initial message
+addMessage("ai", "👋 Hi! I'm your L’Oréal advisor. Ask me about skincare, haircare, or beauty routines!");
+
+// Send message
+chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // When using Cloudflare, you'll need to POST a `messages` array in the body,
-  // and handle the response using: data.choices[0].message.content
+  const message = userInput.value.trim();
+  if (!message) return;
 
-  // Show message
-  chatWindow.innerHTML = "Connect to the OpenAI API for a response!";
+  addMessage("user", message);
+  userInput.value = "";
+
+  try {
+    const response = await fetch("https://shrill-king-8935.marzoujt.workers.dev/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+
+    addMessage("ai", data.reply);
+  } catch (error) {
+    addMessage("ai", "⚠️ Error connecting to assistant.");
+    console.error(error);
+  }
 });
