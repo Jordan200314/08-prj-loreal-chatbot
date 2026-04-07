@@ -34,7 +34,7 @@ chatForm.addEventListener("submit", async function(e) {
   userInput.value = "";
 
   try {
-    const workerUrl = "https://shrill-king-8935.marzoujt.workers.dev/";
+    const workerUrl = "https://divine-feather-df2a.marzoujt.workers.dev/";
 
     const response = await fetch(workerUrl, {
       method: "POST",
