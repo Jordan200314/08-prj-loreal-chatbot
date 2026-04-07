@@ -61,4 +61,5 @@ chatForm.addEventListener("submit", async (e) => {
     addMessage("ai", "⚠️ Error connecting to assistant.");
     console.error(error);
   }
+
 });
