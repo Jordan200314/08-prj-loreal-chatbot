@@ -1,9 +1,8 @@
-/* DOM elements */
 const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
-/* Add message to UI */
+// Add message to UI
 function addMessage(sender, text) {
   const msg = document.createElement("div");
   msg.classList.add("msg", sender);
@@ -12,13 +11,13 @@ function addMessage(sender, text) {
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-/* Initial message */
+// Initial message
 addMessage(
   "ai",
   "👋 Hi! I'm your L’Oréal advisor. Ask me about skincare, haircare, or beauty routines!"
 );
 
-/* Handle form submit */
+// Handle form submit
 chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -41,8 +40,6 @@ chatForm.addEventListener("submit", async (e) => {
     );
 
     const data = await response.json();
-
-    console.log("Worker response:", data);
 
     addMessage(
       "ai",
